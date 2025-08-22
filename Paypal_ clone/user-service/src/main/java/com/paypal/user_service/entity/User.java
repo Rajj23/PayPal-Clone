@@ -1,9 +1,15 @@
 package com.paypal.user_service.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="app_user")
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,12 +22,8 @@ public class User {
 
     private String password;
 
-    public void setId(Long id){
-        this.id=id;
-    }
+    private String role;
 
-    public Long getId(){
-        return id;
-    }
+
 
 }
