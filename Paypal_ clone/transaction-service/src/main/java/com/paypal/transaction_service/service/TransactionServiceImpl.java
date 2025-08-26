@@ -2,6 +2,7 @@ package com.paypal.transaction_service.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paypal.transaction_service.entity.Transaction;
+import com.paypal.transaction_service.kafka.KafkaEventProducer;
 import com.paypal.transaction_service.repository.TransactionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public class TransactionServiceImpl implements TransactionService{
 
     private final TransactionRepository repository;
     private final ObjectMapper objectMapper;
+    private final KafkaEventProducer kafkaEventProducer;
 
     @Override
     public Transaction createTransaction(Transaction request) {
@@ -31,7 +33,16 @@ public class TransactionServiceImpl implements TransactionService{
         transaction.setStatus("SUCCESS");
 
         Transaction saved = repository.save(transaction);
+        System.out.println("Saved Transaction from DB: "+saved);
 
+        try{
+            String key = String.valueOf(saved.getId());
+            kafkaEventProducer.sendTransactionEvent(key, saved);
+        }
+        catch (Exception e){
+            System.out.printf("Failed to send Kafka event: "+e.getMessage());
+            e.printStackTrace();
+        }
 
         return saved;
     }
