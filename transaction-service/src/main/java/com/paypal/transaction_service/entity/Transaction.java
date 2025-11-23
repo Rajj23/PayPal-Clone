@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transaction")
-public class Transactions {
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class Transactions {
     @Column(nullable = false)
     private String status;
 
-    public Transactions(Long senderId, Long id, Long receiverId, Double amount, LocalDateTime timeStamp, String status) {
+    public Transaction(Long senderId, Long id, Long receiverId, Double amount, LocalDateTime timeStamp, String status) {
         this.senderId = senderId;
         this.id = id;
         this.receiverId = receiverId;
@@ -38,7 +38,7 @@ public class Transactions {
         this.status = status;
     }
 
-    public Transactions() {
+    public Transaction() {
 
     }
 

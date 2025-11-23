@@ -1,6 +1,6 @@
 package com.paypal.transaction_service.controller;
 
-import com.paypal.transaction_service.entity.Transactions;
+import com.paypal.transaction_service.entity.Transaction;
 import com.paypal.transaction_service.service.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +19,14 @@ public class TransactionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@Valid @RequestBody Transactions transaction){
+    public ResponseEntity<?> create(@Valid @RequestBody Transaction transaction){
 
-        Transactions created = service.createTransaction(transaction);
+        Transaction created = service.createTransaction(transaction);
         return ResponseEntity.ok(created);
     }
 
     @GetMapping("/all")
-    public List<Transactions> getAll(){
+    public List<Transaction> getAll(){
         return service.getAllTransactions();
     }
 }

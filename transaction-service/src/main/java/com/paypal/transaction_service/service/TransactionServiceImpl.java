@@ -1,7 +1,7 @@
 package com.paypal.transaction_service.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.paypal.transaction_service.entity.Transactions;
+import com.paypal.transaction_service.entity.Transaction;
 import com.paypal.transaction_service.kafka.KafkaEventProducer;
 import com.paypal.transaction_service.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
@@ -25,19 +25,19 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
-    public Transactions createTransaction(Transactions request) {
+    public Transaction createTransaction(Transaction request) {
 
         Long senderId = request.getSenderId();
         Long receiverId = request.getReceiverId();
         Double amount = request.getAmount();
 
-        Transactions transaction = new Transactions();
+        Transaction transaction = new Transaction();
         transaction.setSenderId(senderId);
         transaction.setReceiverId(receiverId);
         transaction.setAmount(amount);
         transaction.setTimeStamp(LocalDateTime.now());
         transaction.setStatus("SUCCESS");
-        Transactions saved = repository.save(transaction);
+        Transaction saved = repository.save(transaction);
         try{
             String key = String.valueOf(saved.getId());
             kafkaEventProducer.sendTransactionEvent(key,saved);
@@ -52,7 +52,7 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
-    public List<Transactions> getAllTransactions() {
+    public List<Transaction> getAllTransactions() {
         return repository.findAll();
     }
 }

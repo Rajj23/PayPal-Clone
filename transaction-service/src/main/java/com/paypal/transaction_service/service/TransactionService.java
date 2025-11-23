@@ -1,12 +1,12 @@
 package com.paypal.transaction_service.service;
 
-import com.paypal.transaction_service.entity.Transactions;
+import com.paypal.transaction_service.entity.Transaction;
 
 import java.util.List;
 
 public interface TransactionService {
 
-    Transactions createTransaction(Transactions transaction);
+    Transaction createTransaction(Transaction transaction);
 
-    List<Transactions> getAllTransactions();
+    List<Transaction> getAllTransactions();
 }
