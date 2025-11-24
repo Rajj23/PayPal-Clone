@@ -1,8 +1,4 @@
-package com.paypal.notification_service.entity;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Positive;
+package com.paypal.reward_service.entity;
 
 import java.time.LocalDateTime;
 
